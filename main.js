@@ -11,6 +11,64 @@ function getRandomNumber(min, max) {
   return randomNumber;
 }
 
+btnNo.addEventListener("mouseover", moveButton);
+btnNo.addEventListener("touchstart", moveButton);
+
+function moveButton(event) {
+  event.preventDefault(); // Prevent default touch behavior
+  const containerHeight = container.getBoundingClientRect().height;
+  const containerWidth = container.getBoundingClientRect().width;
+  const btnHeight = btnNo.getBoundingClientRect().height;
+  const btnWidth = btnNo.getBoundingClientRect().width;
+  const btnTop = btnNo.getBoundingClientRect().top;
+  const btnLeft = btnNo.getBoundingClientRect().left;
+
+  let newTop = btnTop;
+  let newLeft = btnLeft;
+  while (Math.abs(newTop - btnTop) < containerHeight / 3) {
+    newTop = getRandomNumber(0, containerHeight - btnHeight);
+  }
+
+  while (Math.abs(newLeft - btnLeft) < containerWidth / 3) {
+    newLeft = getRandomNumber(0, containerWidth - btnWidth);
+  }
+
+  btnNo.style.top = Math.floor(newTop) + "px";
+  btnNo.style.left = Math.floor(newLeft) + "px";
+}
+
+btnYes.addEventListener("click", (e) => {
+  btnNo.classList.add("hide");
+  imageOne.classList.add("hide");
+  imageTwo.classList.remove("hide");
+});
+
+/* btnNo.addEventListener("mouseover", moveButton);
+btnNo.addEventListener("touchstart", moveButton);
+
+function moveButton(event) {
+  event.preventDefault(); // Prevent default touch behavior
+  const containerHeight = container.getBoundingClientRect().height;
+  const containerWidth = container.getBoundingClientRect().width;
+  const btnHeight = btnNo.getBoundingClientRect().height;
+  const btnWidth = btnNo.getBoundingClientRect().width;
+  const btnTop = btnNo.getBoundingClientRect().top;
+  const btnLeft = btnNo.getBoundingClientRect().left;
+
+  let newTop = btnTop;
+  let newLeft = btnLeft;
+  while (Math.abs(newTop - btnTop) < containerHeight / 3) {
+    newTop = getRandomNumber(0, containerHeight - btnHeight);
+  }
+
+  while (Math.abs(newLeft - btnLeft) < containerWidth / 3) {
+    newLeft = getRandomNumber(0, containerWidth - btnWidth);
+  }
+
+  btnNo.style.top = Math.floor(newTop) + "px";
+  btnNo.style.left = Math.floor(newLeft) + "px";
+}
+
 btnNo.addEventListener("mouseover", (event) => {
   const containerHeight = container.getBoundingClientRect().height;
   const containerWidth = container.getBoundingClientRect().width;
@@ -31,10 +89,4 @@ btnNo.addEventListener("mouseover", (event) => {
 
   btnNo.style.top = Math.floor(newTop) + "px";
   btnNo.style.left = Math.floor(newLeft) + "px";
-});
-
-btnYes.addEventListener("click", (e) => {
-  btnNo.classList.add("hide");
-  imageOne.classList.add("hide");
-  imageTwo.classList.remove("hide");
-});
+});*/
