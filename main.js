@@ -7,7 +7,6 @@ const btnNo = document.querySelector(".btn-no");
 function getRandomNumber(min, max) {
   // Calculate the random number between min and max (inclusive)
   const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-
   return randomNumber;
 }
 
@@ -16,25 +15,23 @@ btnNo.addEventListener("touchstart", moveButton);
 
 function moveButton(event) {
   event.preventDefault(); // Prevent default touch behavior
-  const containerHeight = container.getBoundingClientRect().height;
-  const containerWidth = container.getBoundingClientRect().width;
+
+  const containerRect = container.getBoundingClientRect();
   const btnHeight = btnNo.getBoundingClientRect().height;
   const btnWidth = btnNo.getBoundingClientRect().width;
-  const btnTop = btnNo.getBoundingClientRect().top;
-  const btnLeft = btnNo.getBoundingClientRect().left;
 
-  let newTop = btnTop;
-  let newLeft = btnLeft;
-  while (Math.abs(newTop - btnTop) < containerHeight / 3) {
-    newTop = getRandomNumber(0, containerHeight - btnHeight);
-  }
+  let newTop, newLeft;
 
-  while (Math.abs(newLeft - btnLeft) < containerWidth / 3) {
-    newLeft = getRandomNumber(0, containerWidth - btnWidth);
-  }
+  do {
+    newTop = getRandomNumber(0, containerRect.height - btnHeight);
+  } while (Math.abs(newTop - parseFloat(btnNo.style.top || 0)) < containerRect.height / 3);
 
-  btnNo.style.top = Math.floor(newTop) + "px";
-  btnNo.style.left = Math.floor(newLeft) + "px";
+  do {
+    newLeft = getRandomNumber(0, containerRect.width - btnWidth);
+  } while (Math.abs(newLeft - parseFloat(btnNo.style.left || 0)) < containerRect.width / 3);
+
+  btnNo.style.top = `${newTop}px`;
+  btnNo.style.left = `${newLeft}px`;
 }
 
 btnYes.addEventListener("click", (e) => {
@@ -43,50 +40,10 @@ btnYes.addEventListener("click", (e) => {
   imageTwo.classList.remove("hide");
 });
 
-/* btnNo.addEventListener("mouseover", moveButton);
-btnNo.addEventListener("touchstart", moveButton);
-
-function moveButton(event) {
-  event.preventDefault(); // Prevent default touch behavior
-  const containerHeight = container.getBoundingClientRect().height;
-  const containerWidth = container.getBoundingClientRect().width;
-  const btnHeight = btnNo.getBoundingClientRect().height;
-  const btnWidth = btnNo.getBoundingClientRect().width;
-  const btnTop = btnNo.getBoundingClientRect().top;
-  const btnLeft = btnNo.getBoundingClientRect().left;
-
-  let newTop = btnTop;
-  let newLeft = btnLeft;
-  while (Math.abs(newTop - btnTop) < containerHeight / 3) {
-    newTop = getRandomNumber(0, containerHeight - btnHeight);
+// Reset the "No" button position if needed
+document.addEventListener("click", () => {
+  if (!btnNo.classList.contains("hide")) {
+    btnNo.style.top = "50%";
+    btnNo.style.left = "50%";
   }
-
-  while (Math.abs(newLeft - btnLeft) < containerWidth / 3) {
-    newLeft = getRandomNumber(0, containerWidth - btnWidth);
-  }
-
-  btnNo.style.top = Math.floor(newTop) + "px";
-  btnNo.style.left = Math.floor(newLeft) + "px";
-}
-
-btnNo.addEventListener("mouseover", (event) => {
-  const containerHeight = container.getBoundingClientRect().height;
-  const containerWidth = container.getBoundingClientRect().width;
-  const btnHeight = btnNo.getBoundingClientRect().height;
-  const btnWidth = btnNo.getBoundingClientRect().width;
-  const btnTop = btnNo.getBoundingClientRect().top;
-  const btnLeft = btnNo.getBoundingClientRect().left;
-
-  let newTop = btnTop;
-  let newLeft = btnLeft;
-  while (Math.abs(newTop - btnTop) < containerHeight / 3) {
-    newTop = getRandomNumber(0, containerHeight - btnHeight);
-  }
-
-  while (Math.abs(newLeft - btnLeft) < containerWidth / 3) {
-    newLeft = getRandomNumber(0, containerWidth - btnWidth);
-  }
-
-  btnNo.style.top = Math.floor(newTop) + "px";
-  btnNo.style.left = Math.floor(newLeft) + "px";
-});*/
+});
